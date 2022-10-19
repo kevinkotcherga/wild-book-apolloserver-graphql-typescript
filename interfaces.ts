@@ -19,7 +19,7 @@ export interface ISkill {
 }
 
 export interface IFetchData {
-  // fetchData: () => Promise<void>;
+  onWilderCreated: () => void;
 }
 
 export interface ISkillName {

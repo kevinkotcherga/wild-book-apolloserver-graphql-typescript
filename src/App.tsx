@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
-import { IWilder } from '../interfaces';
 import Wilder from './components/Wilder';
-// import AddWilder from './components/AddWilder';
+import AddWilder from './components/AddWilder';
 // import AddSkill from './components/AddSkill';
 import { useQuery, gql } from '@apollo/client';
 
@@ -21,8 +20,7 @@ const GET_WILDERS = gql`
 `;
 
 function App(): JSX.Element {
-  const { loading, error, data } = useQuery(GET_WILDERS);
-	const [wilders, setWilders] = useState<IWilder[]>([]);
+  const { loading, error, data, refetch } = useQuery(GET_WILDERS);
 
 	return (
 		<div>
@@ -34,6 +32,7 @@ function App(): JSX.Element {
 			<main className="container">
 				<h2>Wilders</h2>
 				<section className="card-row">
+          {loading && "Chargement..."}
 					{data?.wilders.map((wilder: any) => (
 						<Wilder
 							name={wilder.name}
@@ -46,10 +45,10 @@ function App(): JSX.Element {
 					))}
 				</section>
 			</main>
-      {/* <h2>Ajouter un Wilder</h2>
-			<AddWilder fetchData={() => fetchData()} />
+      <h2>Ajouter un Wilder</h2>
+			<AddWilder onWilderCreated={() => refetch()} />
       <br/>
-      <h2>Ajouter un Skill</h2>
+      {/* <h2>Ajouter un Skill</h2>
       <AddSkill fetchData={() => fetchData()}/> */}
 			<footer>
 				<div className="container">

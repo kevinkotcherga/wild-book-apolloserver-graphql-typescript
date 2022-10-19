@@ -1,18 +1,35 @@
 import React from 'react';
 import { useState } from 'react';
-import axios from 'axios';
 import { IFetchData } from '../../interfaces';
+import { gql, useMutation } from '@apollo/client';
+
+const CREATE_WILDER = gql`
+  mutation Mutation($data: WilderInput!) {
+  createWilder(data: $data) {
+    id
+  }
+}
+`
 
 const AddWilder = (props: IFetchData): JSX.Element => {
+  const [doCreate] = useMutation(CREATE_WILDER);
 	const [name, setName] = useState<string>('');
 	const [city, setCity] = useState<string>('');
 
 	const onSubmit = async (event: { preventDefault: () => void}) => {
 		event.preventDefault();
-		await axios.post('http://localhost:5000/api/wilders', { name, city });
+    const { data } = await doCreate({
+      variables: {
+        data: {
+          name,
+          city
+        }
+      }
+    })
+    console.log(data);
 		setName('');
 		setCity('');
-		// props.fetchData();
+    props.onWilderCreated();
 	};
 
 	return (

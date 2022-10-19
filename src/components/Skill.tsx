@@ -1,7 +1,7 @@
 import React from 'react';
 import { ISkills } from '../../interfaces';
 import { BubbleVote } from './styled-components/BubbleVote';
-import { BubbleUpvote } from './styled-components/BubbleUpvote';
+// import { BubbleUpvote } from './styled-components/BubbleUpvote';
 import axios from 'axios';
 
 const Skill = (props: ISkills): JSX.Element => {
